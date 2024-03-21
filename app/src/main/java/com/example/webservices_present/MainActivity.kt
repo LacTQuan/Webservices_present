@@ -34,14 +34,19 @@ class MainActivity : AppCompatActivity() {
             // Launch a coroutine to fetch data asynchronously
             CoroutineScope(Dispatchers.Main).launch { // Use CoroutineScope with Main dispatcher for UI-related coroutines
                 val url = "https://jsonplaceholder.typicode.com/comments/"
-//                val jsonResponse = http.fetchData(url)
-                val jsonResponse = MyRetrofit(findViewById<ProgressBar>(R.id.progressBar)).fetchData(url)
+                val jsonResponse = http.fetchData(url)
+//                val jsonResponse = MyRetrofit(findViewById<ProgressBar>(R.id.progressBar)).fetchData(url)
                 Log.i("MainActivity", "response:$jsonResponse")
                 // Get the type of the response
                 val type = jsonResponse::class.simpleName
                 Log.i("MainActivity", "type:$type")
                 commentAdapter.updateData(jsonResponse as ArrayList<Comment>)
             }
+        }
+
+        val button2 = findViewById<Button>(R.id.button2)
+        button2.setOnClickListener {
+            commentAdapter.updateData(ArrayList<Comment>())
         }
     }
 }
